@@ -140,3 +140,22 @@ Usage: <class_name>.update(<_id>, <dictionary>)
 (hbnb) ["[User] (98bea5de-9cb0-4d78-8a9d-c4de03521c30) {'updated_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134362), 'name': 'Fred the Frog', 'age': 9, 'id': '98bea5de-9cb0-4d78-8a9d-c4de03521c30', 'created_at': datetime.datetime(2020, 2, 19, 21, 47, 29, 134343)}"]
 ```
 <br>
+
+### Environment Variables
+
++ `HBNB_ENV`: The running environment. It can be `dev` or `test`.
++ `HBNB_MYSQL_USER`: The MySQL server username.
++ `HBNB_MYSQL_PWD`: The MySQL server password.
++ `HBNB_MYSQL_HOST`: The MySQL server hostname.
++ `HBNB_MYSQL_DB`: The MySQL server database name.
++ `HBNB_TYPE_STORAGE`: The type of storage used. It can be `file` (using `FileStorage`) or `db` (using `DBStorage`).
+
+
+<!-- ## Testing -->
+
+**NOTE:** Before you push any commit, please run the script `./test.bash` to ensure that no tests are failing and your code complies with this project's styling standard.
+
+
+## Contributors:
+1. Kofoworola Odutola
+.....................................................
