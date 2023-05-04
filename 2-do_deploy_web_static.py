@@ -1,43 +1,35 @@
 #!/usr/bin/python3
-"""A module for web app deployment with Fabric."""
-import os
+"""
+Fabric script that distributes an archive to your web servers
+"""
+
 from datetime import datetime
-from fabric.api import env, local, put, run, runs_once
+from fabric.api import *
+import os
 
-
-env.hosts = ["34.73.0.174", "35.196.78.105"]
+env.hosts = ["54.208.46.187", "	54.86.107.79"]
 env.user = "ubuntu"
-"""The list of host server IP addresses."""
 
 
-@runs_once
 def do_pack():
-    """Archives the static files."""
-    if not os.path.isdir("versions"):
-        os.mkdir("versions")
-    cur_time = datetime.now()
-    output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-        cur_time.year,
-        cur_time.month,
-        cur_time.day,
-        cur_time.hour,
-        cur_time.minute,
-        cur_time.second
-    )
-    try:
-        print("Packing web_static to {}".format(output))
-        local("tar -cvzf {} web_static".format(output))
-        archize_size = os.stat(output).st_size
-        print("web_static packed: {} -> {} Bytes".format(output, archize_size))
-    except Exception:
-        output = None
-    return output
+    """
+        return the archive path if archive has generated correctly.
+    """
+
+    local("mkdir -p versions")
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
+    archived_f_path = "versions/web_static_{}.tgz".format(date)
+    t_gzip_archive = local("tar -cvzf {} web_static".format(archived_f_path))
+
+    if t_gzip_archive.succeeded:
+        return archived_f_path
+    else:
+        return None
 
 
 def do_deploy(archive_path):
-    """Deploys the static files to the host servers.
-    Args:
-        archive_path (str): The path to the archived static files.
+    """
+        Distribute archive.
     """
     if os.path.exists(archive_path):
         archived_file = archive_path[9:]
